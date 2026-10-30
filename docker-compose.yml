@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: dbgestor-mariadb
+    environment:
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+      - MARIADB_DATABASE=dbgestor
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dump-dbgestor-202406261453.sql:/docker-entrypoint-initdb.d/dump.sql
+    restart: always
