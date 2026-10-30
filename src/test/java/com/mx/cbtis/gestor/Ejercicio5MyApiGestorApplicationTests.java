@@ -101,20 +101,10 @@ class Ejercicio5MyApiGestorApplicationTests {
         assertEquals(1, usuarioController.updateUsuario(usuario));
         assertEquals(1, usuarioController.deleteUsuario(usuario));
         assertEquals(1, usuarioController.getUsuarios().size());
-    }
 
-    @Test
-    void testCrudUsuarioRamasFalse() {
-        try {
-            usuarioController.addUsuario(null);
-        } catch (Exception ignored) {}
-
-        try {
-            usuarioController.updateUsuario(null);
-        } catch (Exception ignored) {}
-
-        try {
-            usuarioController.deleteUsuario(null);
-        } catch (Exception ignored) {}
+        // Cubre rama false cuando usuario es null (flag = 0)
+        assertEquals(0, usuarioController.addUsuario(null));
+        assertEquals(0, usuarioController.updateUsuario(null));
+        assertEquals(0, usuarioController.deleteUsuario(null));
     }
 }
