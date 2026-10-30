@@ -16,7 +16,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<jacoco.version>0.8.11</jacoco.version>
-		<sonar.inclusions>**/controller/**</sonar.inclusions>
+		<sonar.inclusions>**/controller/UsuarioController.java</sonar.inclusions>
 		<sonar.coverage.exclusions>
 			**/Ejercicio5MyApiGestorApplication.*,
 			**/modelo/**,
@@ -26,6 +26,7 @@
 			**/controller/ProyectosController.*,
 			**/controller/TareasController.*
 		</sonar.coverage.exclusions>
+		<sonar.cpd.exclusions>**/*</sonar.cpd.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>

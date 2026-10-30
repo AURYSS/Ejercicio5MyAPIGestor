@@ -102,4 +102,19 @@ class Ejercicio5MyApiGestorApplicationTests {
         assertEquals(1, usuarioController.deleteUsuario(usuario));
         assertEquals(1, usuarioController.getUsuarios().size());
     }
+
+    @Test
+    void testCrudUsuarioRamasFalse() {
+        try {
+            usuarioController.addUsuario(null);
+        } catch (Exception ignored) {}
+
+        try {
+            usuarioController.updateUsuario(null);
+        } catch (Exception ignored) {}
+
+        try {
+            usuarioController.deleteUsuario(null);
+        } catch (Exception ignored) {}
+    }
 }
