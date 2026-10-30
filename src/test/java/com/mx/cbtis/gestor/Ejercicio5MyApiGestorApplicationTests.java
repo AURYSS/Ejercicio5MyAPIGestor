@@ -11,9 +11,12 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
 
 import com.mx.cbtis.gestor.controller.AsignacionesController;
 import com.mx.cbtis.gestor.controller.ComentariosController;
@@ -31,11 +34,17 @@ import com.mx.cbtis.gestor.repository.ProtectosRepository;
 import com.mx.cbtis.gestor.repository.TareasRepository;
 import com.mx.cbtis.gestor.repository.UsuarioRepository;
 
-@SpringBootTest
-@TestPropertySource(properties = {
-    "spring.jpa.database-platform=org.hibernate.dialect.MariaDB106Dialect",
-    "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDB106Dialect",
-    "spring.datasource.driver-class-name=org.mariadb.jdbc.Driver"
+@SpringBootTest(classes = {
+    UsuarioController.class,
+    ProyectosController.class,
+    TareasController.class,
+    AsignacionesController.class,
+    ComentariosController.class
+})
+@EnableAutoConfiguration(exclude = {
+    DataSourceAutoConfiguration.class,
+    DataSourceTransactionManagerAutoConfiguration.class,
+    HibernateJpaAutoConfiguration.class
 })
 class Ejercicio5MyApiGestorApplicationTests {
 
