@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>21</java.version>
 		<jacoco.version>0.8.11</jacoco.version>
+		<sonar.coverage.exclusions>**/Ejercicio5MyApiGestorApplication.java,**/modelo/**,**/repository/**</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>

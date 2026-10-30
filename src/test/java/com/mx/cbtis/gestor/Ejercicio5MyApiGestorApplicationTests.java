@@ -131,13 +131,22 @@ class Ejercicio5MyApiGestorApplicationTests {
 
         Usuario res = usuarioController.getUsuario(5);
         assertEquals("TestUser", res.getNombre());
+
+        when(usuarioRepository.findById(999)).thenReturn(Optional.empty());
+        assertNotNull(usuarioController.getUsuario(999));
     }
 
     @Test
-    void testAddUsuario() {
+    void testCrudUsuario() {
         Usuario usuario = new Usuario();
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        doNothing().when(usuarioRepository).delete(any(Usuario.class));
+        when(usuarioRepository.findAll()).thenReturn(Collections.singletonList(usuario));
+
         assertEquals(1, usuarioController.addUsuario(usuario));
+        assertEquals(1, usuarioController.updateUsuario(usuario));
+        assertEquals(1, usuarioController.deleteUsuario(usuario));
+        assertEquals(1, usuarioController.getUsuarios().size());
     }
 
     // --- PRUEBAS DE PROYECTOS CONTROLLER ---
@@ -148,9 +157,10 @@ class Ejercicio5MyApiGestorApplicationTests {
         p.setNombre("Proyecto 1");
 
         when(proyectosRepository.findById(10)).thenReturn(Optional.of(p));
+        assertEquals("Proyecto 1", proyectosController.getProyecto(10).getNombre());
 
-        Proyectos res = proyectosController.getProyecto(10);
-        assertEquals("Proyecto 1", res.getNombre());
+        when(proyectosRepository.findById(999)).thenReturn(Optional.empty());
+        assertNotNull(proyectosController.getProyecto(999));
     }
 
     @Test
@@ -174,9 +184,10 @@ class Ejercicio5MyApiGestorApplicationTests {
         t.setNombre("Tarea Test");
 
         when(tareasRepository.findById(3)).thenReturn(Optional.of(t));
+        assertEquals("Tarea Test", tareasController.getTarea(3).getNombre());
 
-        Tareas res = tareasController.getTarea(3);
-        assertEquals("Tarea Test", res.getNombre());
+        when(tareasRepository.findById(999)).thenReturn(Optional.empty());
+        assertNotNull(tareasController.getTarea(999));
     }
 
     @Test
@@ -198,16 +209,23 @@ class Ejercicio5MyApiGestorApplicationTests {
 
     // --- PRUEBAS DE ASIGNACIONES CONTROLLER ---
     @Test
-    void testCrudAsignaciones() {
+    void testBuscarAsignacion() {
         Asignaciones a = new Asignaciones();
         a.setId_asignacion(1);
-
         when(asignacionesRepository.findById(1)).thenReturn(Optional.of(a));
+        assertNotNull(asignacionesController.getAsignacion(1));
+
+        when(asignacionesRepository.findById(999)).thenReturn(Optional.empty());
+        assertNotNull(asignacionesController.getAsignacion(999));
+    }
+
+    @Test
+    void testCrudAsignaciones() {
+        Asignaciones a = new Asignaciones();
         when(asignacionesRepository.save(any(Asignaciones.class))).thenReturn(a);
         doNothing().when(asignacionesRepository).delete(any(Asignaciones.class));
         when(asignacionesRepository.findAll()).thenReturn(Collections.singletonList(a));
 
-        assertNotNull(asignacionesController.getAsignacion(1));
         assertEquals(1, asignacionesController.addAsignacion(a));
         assertEquals(1, asignacionesController.updateAsignacion(a));
         assertEquals(1, asignacionesController.deleteAsignacion(a));
@@ -216,18 +234,26 @@ class Ejercicio5MyApiGestorApplicationTests {
 
     // --- PRUEBAS DE COMENTARIOS CONTROLLER ---
     @Test
-    void testCrudComentarios() {
+    void testBuscarComentario() {
         Comentarios c = new Comentarios();
         c.setId_comentario(7);
+        when(comentariosRepository.findById(7)).thenReturn(Optional.of(c));
+        assertNotNull(comentariosController.getComentario(7));
+
+        when(comentariosRepository.findById(999)).thenReturn(Optional.empty());
+        assertNotNull(comentariosController.getComentario(999));
+    }
+
+    @Test
+    void testCrudComentarios() {
+        Comentarios c = new Comentarios();
         c.setId_tarea(4);
 
-        when(comentariosRepository.findById(7)).thenReturn(Optional.of(c));
         when(comentariosRepository.findByTarea(4)).thenReturn(Collections.singletonList(c));
         when(comentariosRepository.save(any(Comentarios.class))).thenReturn(c);
         doNothing().when(comentariosRepository).delete(any(Comentarios.class));
         when(comentariosRepository.findAll()).thenReturn(Collections.singletonList(c));
 
-        assertNotNull(comentariosController.getComentario(7));
         assertEquals(1, comentariosController.getComentario(c).size());
         assertEquals(1, comentariosController.addComentario(c));
         assertEquals(1, comentariosController.updateComentario(c));
