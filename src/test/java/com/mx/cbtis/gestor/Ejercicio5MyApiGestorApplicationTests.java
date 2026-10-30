@@ -7,13 +7,13 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 
 import com.mx.cbtis.gestor.controller.AsignacionesController;
 import com.mx.cbtis.gestor.controller.ComentariosController;
@@ -32,6 +32,11 @@ import com.mx.cbtis.gestor.repository.TareasRepository;
 import com.mx.cbtis.gestor.repository.UsuarioRepository;
 
 @SpringBootTest
+@TestPropertySource(properties = {
+    "spring.jpa.database-platform=org.hibernate.dialect.MariaDB106Dialect",
+    "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDB106Dialect",
+    "spring.datasource.driver-class-name=org.mariadb.jdbc.Driver"
+})
 class Ejercicio5MyApiGestorApplicationTests {
 
     @Autowired
